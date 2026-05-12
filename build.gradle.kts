@@ -1,0 +1,126 @@
+group = "hexlet.code"
+version = "0.0.1-SNAPSHOT"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+plugins {
+    id("java")
+    id("checkstyle")
+    id("se.patrikerdes.use-latest-versions") version "0.2.18"
+    id("com.github.ben-manes.versions") version "0.49.0"
+    id("com.gradleup.shadow") version "8.3.10"
+    id("io.freefair.lombok") version "8.10"
+    id("org.sonarqube") version "4.0.0.2929"
+    id("jacoco")
+    id("org.springframework.boot") version "3.5.14"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("gg.jte.gradle") version "3.2.1"
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+jte {
+    precompile()
+}
+
+configure<gg.jte.gradle.JteExtension> {
+    sourceDirectory.set(project.layout.projectDirectory.dir("src/main/resources/templates").asFile.toPath())
+    generate()
+}
+
+checkstyle {
+    toolVersion = "10.9.3"
+
+    configFile = file("config/checkstyle/checkstyle.xml")
+
+    isIgnoreFailures = true
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+sonar {
+    properties {
+        property("sonar.projectName", "Hexlet.Java.m4k.PageAnalyzer")
+        property("sonar.projectKey", "AnrDaemon_java-project-72")
+        property("sonar.organization", "anrdaemon")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.exclusions", "**/gg/jte/generated/**")
+        property("sonar.coverage.exclusions", "**/gg/jte/generated/**")
+    }
+}
+
+testing {
+    suites {
+        // Configure the built-in test suite
+        val test by getting(JvmTestSuite::class) {
+            // Use JUnit Jupiter test framework
+            useJUnitJupiter("5.9.3")
+
+            targets.all {
+                testTask.configure {
+                    finalizedBy(tasks.jacocoTestReport)
+                }
+            }
+        }
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+            // "Main-Class" to application.mainClass.get(),
+            "Implementation-Title" to "Task manager course work",
+            "Implementation-Version" to project.version
+        )
+    }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    dependsOn("generateJte")
+}
+
+tasks.matching { it.name == "generateEffectiveLombokConfig" }.configureEach {
+    dependsOn("generateJte")
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(arrayOf(
+        "-Aproject=${project.group}/${project.name}"
+    ))
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+    }
+}
+
+tasks.register("install") {
+    dependsOn("installDist")
+}
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    from("jte-classes") {
+        include("**/*.class")
+    }
+    mergeServiceFiles()
+}
