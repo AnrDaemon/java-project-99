@@ -44,7 +44,7 @@ configure<gg.jte.gradle.JteExtension> {
 checkstyle {
     toolVersion = "10.9.3"
 
-    configFile = file("../config/checkstyle/checkstyle.xml")
+    configFile = file("config/checkstyle/checkstyle.xml")
 
     isIgnoreFailures = true
     maxWarnings = 0

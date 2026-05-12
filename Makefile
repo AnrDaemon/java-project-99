@@ -1,8 +1,22 @@
+build:
+	./gradlew build
 
-all:
-	$(MAKE) -C app all
+run:
+	./gradlew run
 
-%:
-	$(MAKE) -C app $@
+report:
+	./gradlew jacocoTestReport
 
-.PHONY: all %
+test:
+	./gradlew test
+
+sonar:
+	./gradlew sonar --info
+
+clean:
+	./gradlew clean
+
+check:
+	./gradlew checkStyleMain checkStyleTest
+
+.PHONY: build report test sonar check run
