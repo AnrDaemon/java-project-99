@@ -57,8 +57,8 @@ jacoco {
 
 sonar {
     properties {
-        property("sonar.projectName", "Hexlet.Java.m4k.PageAnalyzer")
-        property("sonar.projectKey", "AnrDaemon_java-project-72")
+        property("sonar.projectName", "Hexlet.Java.m5k.TaskManager")
+        property("sonar.projectKey", "AnrDaemon_java-project-99")
         property("sonar.organization", "anrdaemon")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.exclusions", "**/gg/jte/generated/**")
