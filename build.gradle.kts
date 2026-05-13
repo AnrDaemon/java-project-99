@@ -13,7 +13,7 @@ repositories {
 }
 
 plugins {
-    id("java")
+    id("application")
     id("checkstyle")
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
     id("com.github.ben-manes.versions") version "0.49.0"
@@ -24,12 +24,44 @@ plugins {
     id("org.springframework.boot") version "3.5.14"
     id("io.spring.dependency-management") version "1.1.7"
     id("gg.jte.gradle") version "3.2.1"
+    id("io.sentry.jvm.gradle") version "5.6.0"
 }
 
 dependencies {
+    // annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+    // implementation("org.mapstruct:mapstruct:1.6.3")
+
+    // Source: https://mvnrepository.com/artifact/io.sentry/sentry
+    implementation("io.sentry:sentry:8.38.0")
+    // implementation("net.datafaker:datafaker:2.4.3")
+    // implementation("net.javacrumbs.json-unit:json-unit-assertj:4.0.0")
+    // implementation("org.instancio:instancio-junit:5.0.2")
+    // implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    // implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+    implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter")
+    // implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    // implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    // implementation("org.springframework.boot:spring-boot-starter-security")
+    // implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    implementation("com.h2database:h2")
+    implementation("org.postgresql:postgresql")
+
+    // для отладки
+    implementation("org.springframework.boot:spring-boot-devtools")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // testImplementation("org.springframework.security:spring-security-test")
+    testImplementation(platform("org.junit:junit-bom:5.12.0"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+application {
+    mainClass.set("hexlet.code.AppApplication")
 }
 
 jte {
@@ -85,7 +117,7 @@ testing {
 tasks.jar {
     manifest {
         attributes(
-            // "Main-Class" to application.mainClass.get(),
+            "Main-Class" to application.mainClass.get(),
             "Implementation-Title" to "Task manager course work",
             "Implementation-Version" to project.version
         )
