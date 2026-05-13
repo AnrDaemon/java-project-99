@@ -36,14 +36,14 @@ dependencies {
     // implementation("net.datafaker:datafaker:2.4.3")
     // implementation("net.javacrumbs.json-unit:json-unit-assertj:4.0.0")
     // implementation("org.instancio:instancio-junit:5.0.2")
-    // implementation("org.openapitools:jackson-databind-nullable:0.2.6")
-    // implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.10")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter")
     // implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    // implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
@@ -55,7 +55,7 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    // testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation(platform("org.junit:junit-bom:5.12.0"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
