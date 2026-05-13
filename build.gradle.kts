@@ -28,8 +28,8 @@ plugins {
 }
 
 dependencies {
-    // annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
-    // implementation("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+    implementation("org.mapstruct:mapstruct:1.6.3")
 
     // Source: https://mvnrepository.com/artifact/io.sentry/sentry
     implementation("io.sentry:sentry:8.38.0")
@@ -41,10 +41,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter")
     // implementation("org.springframework.boot:spring-boot-starter-actuator")
-    // implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     // implementation("org.springframework.boot:spring-boot-starter-security")
-    // implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("com.h2database:h2")
