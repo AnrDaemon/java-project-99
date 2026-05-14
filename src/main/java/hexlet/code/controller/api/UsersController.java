@@ -55,7 +55,7 @@ public class UsersController {
 
     // --------------------------------------------------------------------------------------------------
     @PatchMapping(path = "/{id}")
-    // @ PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}")
     @PreAuthorize("@userUtils.isAuthor(#id)") // может изменить только тот кто вошел
     @ResponseStatus(HttpStatus.OK)
     public UserDTO update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
