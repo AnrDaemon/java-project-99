@@ -36,12 +36,6 @@ import hexlet.code.service.UserService;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
-
-    // @Autowired
-    // private CustomUserDetailsService userService;
-
     @Autowired
     private RsaKeyProperties rsaKeys;
 
@@ -63,7 +57,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector,
+            JwtDecoder jwtDecoder)
             throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
@@ -82,7 +77,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer((rs) -> rs.jwt((jwt) -> jwt.decoder(jwtDecoder())))
+                .oauth2ResourceServer((rs) -> rs.jwt((jwt) -> jwt.decoder(jwtDecoder)))
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
