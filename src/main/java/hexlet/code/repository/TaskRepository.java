@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import jakarta.validation.constraints.NotNull;
@@ -18,5 +19,5 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
 
     boolean existsByTaskStatus(@NotNull TaskStatus taskStatus);
 
-    // boolean existsByLabelsContaining(Label label);
+    boolean existsByLabelsContaining(Label label);
 }

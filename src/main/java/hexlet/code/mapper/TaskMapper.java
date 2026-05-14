@@ -4,10 +4,10 @@ import hexlet.code.dto.task.TaskCreateDTO;
 import hexlet.code.dto.task.TaskDTO;
 
 import hexlet.code.dto.task.TaskUpdateDTO;
-// import hexlet.code.model.Label;
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
-// import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
 import org.mapstruct.Mapper;
@@ -31,8 +31,8 @@ public abstract class TaskMapper {
     @Autowired
     private TaskStatusRepository statusRepository;
 
-    // @Autowired
-    // private LabelRepository labelRepository;
+    @Autowired
+    private LabelRepository labelRepository;
 
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
@@ -67,16 +67,16 @@ public abstract class TaskMapper {
         return statusRepository.findBySlug(slug).orElseThrow();
     }
 
-    // @Named("getLabelIds")
-    // public Set<Long> getLabelIds(Set<Label> labels) {
-    // return labels == null ? new HashSet<>()
-    // : labels.stream()
-    // .map(Label::getId)
-    // .collect(Collectors.toSet());
-    // }
+    @Named("getLabelIds")
+    public Set<Long> getLabelIds(Set<Label> labels) {
+        return labels == null ? new HashSet<>()
+                : labels.stream()
+                        .map(Label::getId)
+                        .collect(Collectors.toSet());
+    }
 
-    // @Named("getLabels")
-    // Set<Label> getLabels(Set<Long> labelIds) {
-    // return labelRepository.findByIdIn(labelIds);
-    // }
+    @Named("getLabels")
+    Set<Label> getLabels(Set<Long> labelIds) {
+        return labelRepository.findByIdIn(labelIds);
+    }
 }
