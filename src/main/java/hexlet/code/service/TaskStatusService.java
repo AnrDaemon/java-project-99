@@ -10,7 +10,7 @@ import hexlet.code.dto.task.TaskStatusUpdateDTO;
 import hexlet.code.exception.ResourceDeletionException;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskStatusMapper;
-// import hexlet.code.repository.TaskRepository;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import lombok.AllArgsConstructor;
 
@@ -20,7 +20,7 @@ public class TaskStatusService {
 
     private TaskStatusRepository taskStatusRepository;
     private TaskStatusMapper taskStatusMapper;
-    // private TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     /**
      * GET /api/task_statuses/{id}
@@ -66,13 +66,13 @@ public class TaskStatusService {
      * DELETE /api/task_statuses/{id}
      */
     public void delete(long id) {
-        // var taskStatus = taskStatusRepository.findById(id)
-        // .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+        var taskStatus = taskStatusRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
 
-        // if (taskRepository.existsByTaskStatus(taskStatus)) {
-        // throw new ResourceDeletionException("Нельзя удалить статус, он связан с
-        // задачей");
-        // }
+        if (taskRepository.existsByTaskStatus(taskStatus)) {
+            throw new ResourceDeletionException("Нельзя удалить статус, он связан с задачей");
+        }
+
         taskStatusRepository.deleteById(id);
     }
 }
