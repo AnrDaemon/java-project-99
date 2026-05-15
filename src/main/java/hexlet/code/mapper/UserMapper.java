@@ -15,10 +15,12 @@ import hexlet.code.dto.user.UserDTO;
 import hexlet.code.dto.user.UserUpdateDTO;
 import hexlet.code.model.User;
 
-@Mapper(uses = {
-        JsonNullableMapper.class }, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-
+@Mapper(uses = { JsonNullableMapper.class },
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+    componentModel = MappingConstants.ComponentModel.SPRING,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class UserMapper {
+
     @Autowired
     private BCryptPasswordEncoder encoder;
 
@@ -34,6 +36,9 @@ public abstract class UserMapper {
 
     public abstract void update(UserUpdateDTO userUpdateDTO, @MappingTarget User user);
 
+    /**
+     * @param data
+     */
     @BeforeMapping
     public void encryptPassword(UserCreateDTO data) {
         var password = data.getPassword();

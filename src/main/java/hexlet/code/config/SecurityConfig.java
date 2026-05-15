@@ -49,11 +49,17 @@ public class SecurityConfig {
     @Autowired
     private RsaKeyProperties rsaKeys;
 
+    /**
+     * @return BCryptPasswordEncoder
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * @return JwtEncoder
+     */
     @Bean
     JwtEncoder jwtEncoder() {
         JWK jwk = new RSAKey.Builder(rsaKeys.getPublicKey()).privateKey(rsaKeys.getPrivateKey()).build();
@@ -61,11 +67,22 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwks);
     }
 
+    /**
+     * @return jwtEncoder
+     */
     @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(rsaKeys.getPublicKey()).build();
     }
 
+    /**
+     *
+     * @param http
+     * @param introspector
+     * @param jwtDecoder
+     * @return SecurityFilterChain
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector,
             JwtDecoder jwtDecoder)
@@ -92,12 +109,22 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * @param http
+     * @return AuthenticationManager
+     * @throws Exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .build();
     }
 
+    /**
+     * @param passwordEncoder
+     * @param userService
+     * @return AuthenticationProvider
+     */
     @Bean
     public AuthenticationProvider daoAuthProvider(PasswordEncoder passwordEncoder, UserService userService) {
         var provider = new DaoAuthenticationProvider();
@@ -106,8 +133,11 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * @return Jackson2ObjectMapperBuilder
+     */
     @Bean
-    Jackson2ObjectMapperBuilder objectMapperBuilder() {
+    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
         var builder = new Jackson2ObjectMapperBuilder();
 
         var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

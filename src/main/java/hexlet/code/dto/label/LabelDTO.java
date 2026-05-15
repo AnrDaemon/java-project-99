@@ -9,6 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@SuppressWarnings(value = "checkstyle:MagicNumber")
 public class LabelDTO {
 
     private Long id;

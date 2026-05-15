@@ -84,6 +84,9 @@ public class UsersControllerTest {
     private User testUser;
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
+    /**
+     * Set up the test environment.
+     */
     @BeforeEach
     public void setUp() {
         taskRepository.deleteAll();
@@ -101,6 +104,9 @@ public class UsersControllerTest {
         token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
     }
 
+    /**
+     * Collect garbage after a test run.
+     */
     @AfterEach
     public void garbageDbDelete() {
         taskRepository.deleteAll();

@@ -71,6 +71,9 @@ public class TaskStatusControllerTest {
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
     private TaskStatus testTaskStatus;
 
+    /**
+     * Set up the test environment.
+     */
     @BeforeEach
     public void setUp() {
         taskStatusRepository.deleteAll();
@@ -86,6 +89,9 @@ public class TaskStatusControllerTest {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
     }
 
+    /**
+     * Collect garbage after a test run.
+     */
     @AfterEach
     public void garbageDbDelete() {
         taskStatusRepository.deleteAll();

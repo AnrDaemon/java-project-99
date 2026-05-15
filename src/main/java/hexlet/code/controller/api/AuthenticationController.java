@@ -22,7 +22,10 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     /**
-     * Authentication with JSON Web Token
+     * Authentication with JSON Web Token.
+     *
+     * @param authRequest
+     * @return token
      */
     @PostMapping("/login")
     public String create(@RequestBody AuthRequest authRequest) {

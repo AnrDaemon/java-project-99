@@ -23,7 +23,10 @@ public class TaskStatusService {
     private TaskRepository taskRepository;
 
     /**
-     * GET /api/task_statuses/{id}
+     * GET /api/task_statuses/{id}.
+     *
+     * @param id
+     * @return TaskStatus
      */
     public TaskStatusDTO show(long id) {
         var taskStatuses = taskStatusRepository.findById(id)
@@ -32,7 +35,9 @@ public class TaskStatusService {
     }
 
     /**
-     * GET /api/task_statuses
+     * GET /api/task_statuses.
+     *
+     * @return List of TaskStatus
      */
     public List<TaskStatusDTO> index() {
         var taskStatuses = taskStatusRepository.findAll();
@@ -43,7 +48,10 @@ public class TaskStatusService {
     }
 
     /**
-     * POST /api/task_statuses
+     * POST /api/task_statuses.
+     *
+     * @param dto
+     * @return TaskStatus
      */
     public TaskStatusDTO create(TaskStatusCreateDTO dto) {
         var newTaskStatus = taskStatusMapper.map(dto);
@@ -52,7 +60,11 @@ public class TaskStatusService {
     }
 
     /**
-     * PUT /api/task_statuses/{id}
+     * PUT /api/task_statuses/{id}.
+     *
+     * @param id
+     * @param dto
+     * @return TaskStatus
      */
     public TaskStatusDTO update(long id, TaskStatusUpdateDTO dto) {
         var taskStatus = taskStatusRepository.findById(id)
@@ -63,7 +75,9 @@ public class TaskStatusService {
     }
 
     /**
-     * DELETE /api/task_statuses/{id}
+     * DELETE /api/task_statuses/{id}.
+     *
+     * @param id
      */
     public void delete(long id) {
         var taskStatus = taskStatusRepository.findById(id)

@@ -11,9 +11,10 @@ import hexlet.code.dto.task.TaskStatusDTO;
 import hexlet.code.dto.task.TaskStatusUpdateDTO;
 import hexlet.code.model.TaskStatus;
 
-@Mapper(uses = {
-        JsonNullableMapper.class }, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-
+@Mapper(uses = { JsonNullableMapper.class },
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+    componentModel = MappingConstants.ComponentModel.SPRING,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class TaskStatusMapper {
 
     public abstract TaskStatus map(TaskStatusDTO dto);

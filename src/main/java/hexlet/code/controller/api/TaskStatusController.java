@@ -29,7 +29,10 @@ public class TaskStatusController {
     private TaskStatusService taskStatusService;
 
     /**
-     * GET /api/task_statuses/{id}
+     * GET /api/task_statuses/{id}.
+     *
+     * @param id
+     * @return TaskStatus
      */
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +41,9 @@ public class TaskStatusController {
     }
 
     /**
-     * GET /api/task_statuses
+     * GET /api/task_statuses.
+     *
+     * @return TaskStatus list
      */
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
@@ -50,7 +55,10 @@ public class TaskStatusController {
     }
 
     /**
-     * POST /api/task_statuses
+     * POST /api/task_statuses.
+     *
+     * @param createDTO
+     * @return TaskStatus
      */
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
@@ -59,7 +67,11 @@ public class TaskStatusController {
     }
 
     /**
-     * PUT /api/task_statuses/{id}
+     * PUT /api/task_statuses/{id}.
+     *
+     * @param id
+     * @param updateDTO
+     * @return TaskStatus
      */
     @RequestMapping(path = "/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
     @ResponseStatus(HttpStatus.OK)
@@ -68,7 +80,9 @@ public class TaskStatusController {
     }
 
     /**
-     * DELETE /api/task_statuses/{id}
+     * DELETE /api/task_statuses/{id}.
+     *
+     * @param id
      */
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

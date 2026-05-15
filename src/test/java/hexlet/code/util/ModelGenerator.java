@@ -35,6 +35,7 @@ public class ModelGenerator {
     private PasswordEncoder passwordEncoder;
 
     @PostConstruct
+    @SuppressWarnings(value = "checkstyle:MagicNumber")
     private void init() {
         userModel = Instancio.of(User.class)
                 .ignore(Select.field(User::getId))

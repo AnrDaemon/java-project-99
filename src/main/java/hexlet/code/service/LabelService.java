@@ -23,7 +23,10 @@ public class LabelService {
     private TaskRepository taskRepository;
 
     /**
-     * GET /api/labels/{id}
+     * GET /api/labels/{id}.
+     *
+     * @param id
+     * @return Label
      */
     public LabelDTO show(Long id) {
         return labelMapper.map(labelRepository
@@ -32,7 +35,9 @@ public class LabelService {
     }
 
     /**
-     * GET /api/labels
+     * GET /api/labels.
+     *
+     * @return Label list
      */
     public List<LabelDTO> showAll() {
         var labels = labelRepository.findAll();
@@ -42,7 +47,10 @@ public class LabelService {
     }
 
     /**
-     * POST /api/labels
+     * POST /api/labels.
+     *
+     * @param labelDTO
+     * @return Label
      */
     public LabelDTO create(LabelCreateDTO labelDTO) {
         return labelMapper.map(
@@ -51,7 +59,11 @@ public class LabelService {
     }
 
     /**
-     * PUT /api/labels/{id}
+     * PUT /api/labels/{id}.
+     *
+     * @param id
+     * @param dto
+     * @return Label
      */
     public LabelDTO update(long id, LabelUpdateDTO dto) {
         var label = labelRepository.findById(id)
@@ -62,7 +74,9 @@ public class LabelService {
     }
 
     /**
-     * DELETE /api/labels/{id}
+     * DELETE /api/labels/{id}.
+     *
+     * @param id
      */
     public void delete(long id) {
         var label = labelRepository.findById(id)

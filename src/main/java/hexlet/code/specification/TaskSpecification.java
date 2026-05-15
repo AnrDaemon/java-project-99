@@ -9,6 +9,12 @@ import hexlet.code.model.Task;
 @Component
 public class TaskSpecification {
 
+    /**
+     * Task spec.
+     *
+     * @param dto
+     * @return Spec.
+     */
     public Specification<Task> build(TaskParamsDTO dto) {
         return withTitleCont(dto.getTitleCont())
                 .and(withAssigneeId(dto.getAssigneeId()))

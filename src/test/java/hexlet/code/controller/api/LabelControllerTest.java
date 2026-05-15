@@ -74,6 +74,9 @@ public class LabelControllerTest {
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
     private Label testLabel;
 
+    /**
+     * Set up the test environment.
+     */
     @BeforeEach
     public void setUp() {
         labelRepository.deleteAll();
@@ -89,6 +92,9 @@ public class LabelControllerTest {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
     }
 
+    /**
+     * Collect garbage after a test run.
+     */
     @AfterEach
     public void garbageDbDelete() {
         taskRepository.deleteAll();

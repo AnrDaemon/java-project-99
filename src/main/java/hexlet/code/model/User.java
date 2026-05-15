@@ -55,36 +55,57 @@ public class User implements UserDetails, BaseEntity {
     @LastModifiedDate
     private LocalDate updatedAt;
 
+    /**
+     * @return Password digest.
+     */
     @Override
     public String getPassword() {
         return passwordDigest;
     }
 
+    /**
+     * @return email.
+     */
     @Override
     public String getUsername() {
         return email;
     }
 
+    /**
+     * @return bool
+     */
     @Override
     public boolean isEnabled() {
         return true;
     }
 
+    /**
+     * @return list
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<GrantedAuthority>();
     }
 
+    /**
+     * @return bool
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;

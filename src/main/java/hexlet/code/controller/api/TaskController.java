@@ -30,7 +30,10 @@ public class TaskController {
     private TaskService taskService;
 
     /**
-     * GET /api/tasks/{id}
+     * GET /api/tasks/{id}.
+     *
+     * @param id
+     * @return Task.
      */
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -39,7 +42,10 @@ public class TaskController {
     }
 
     /**
-     * GET /api/tasks
+     * GET /api/tasks.
+     *
+     * @param params
+     * @return Tasks.
      */
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
@@ -51,7 +57,10 @@ public class TaskController {
     }
 
     /**
-     * POST /api/tasks
+     * POST /api/tasks.
+     *
+     * @param dto
+     * @return Task.
      */
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,7 +69,11 @@ public class TaskController {
     }
 
     /**
-     * PUT /api/tasks/{id}
+     * PUT /api/tasks/{id}.
+     *
+     * @param id
+     * @param dto
+     * @return Task.
      */
     @RequestMapping(path = "/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
     @ResponseStatus(HttpStatus.OK)
@@ -69,7 +82,9 @@ public class TaskController {
     }
 
     /**
-     * DELETE /api/tasks/{id}
+     * DELETE /api/tasks/{id}.
+     *
+     * @param id
      */
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
