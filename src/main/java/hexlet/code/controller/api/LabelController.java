@@ -29,7 +29,10 @@ public class LabelController {
     private LabelService labelService;
 
     /**
-     * GET /api/labels/{id}
+     * GET /api/labels/{id}.
+     *
+     * @param id
+     * @return Label.
      */
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +41,9 @@ public class LabelController {
     }
 
     /**
-     * GET /api/labels
+     * GET /api/labels.
+     *
+     * @return List of labels.
      */
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
@@ -50,7 +55,10 @@ public class LabelController {
     }
 
     /**
-     * POST /api/labels
+     * POST /api/labels.
+     *
+     * @param label
+     * @return Label.
      */
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
@@ -59,7 +67,11 @@ public class LabelController {
     }
 
     /**
-     * PUT /api/labels/{id}
+     * PUT /api/labels/{id}.
+     *
+     * @param id
+     * @param label
+     * @return Label.
      */
     @RequestMapping(path = "/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
     @ResponseStatus(HttpStatus.OK)
@@ -68,7 +80,9 @@ public class LabelController {
     }
 
     /**
-     * DELETE /api/labels/{id}
+     * DELETE /api/labels/{id}.
+     *
+     * @param id
      */
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

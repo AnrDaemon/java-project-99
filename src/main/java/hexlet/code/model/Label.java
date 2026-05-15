@@ -27,6 +27,7 @@ import lombok.Setter;
 @Table(name = "labels")
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SuppressWarnings(value = "checkstyle:MagicNumber")
 public class Label implements BaseEntity {
 
     @Id

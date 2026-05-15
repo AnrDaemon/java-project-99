@@ -11,11 +11,19 @@ import hexlet.code.exception.ResourceNotFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * @param ex
+     * @return Response.
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    /**
+     * @param ex
+     * @return Response.
+     */
     @ExceptionHandler(ResourceDeletionException.class)
     public ResponseEntity<String> handleResourceDeleteException(ResourceDeletionException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

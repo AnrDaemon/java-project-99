@@ -23,9 +23,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(uses = { JsonNullableMapper.class,
-        ReferenceMapper.class }, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-
+@Mapper(uses = { JsonNullableMapper.class, ReferenceMapper.class },
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+    componentModel = MappingConstants.ComponentModel.SPRING,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class TaskMapper {
 
     @Autowired
@@ -34,6 +35,10 @@ public abstract class TaskMapper {
     @Autowired
     private LabelRepository labelRepository;
 
+    /**
+     * @param dto
+     * @return Task.
+     */
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "statusBySlug")
@@ -62,11 +67,19 @@ public abstract class TaskMapper {
     @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "getLabels")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task task);
 
+    /**
+     * @param slug
+     * @return Entity
+     */
     @Named("statusBySlug")
     public TaskStatus statusBySlug(String slug) {
         return statusRepository.findBySlug(slug).orElseThrow();
     }
 
+    /**
+     * @param labels
+     * @return Set of ids.
+     */
     @Named("getLabelIds")
     public Set<Long> getLabelIds(Set<Label> labels) {
         return labels == null ? new HashSet<>()
@@ -75,6 +88,10 @@ public abstract class TaskMapper {
                         .collect(Collectors.toSet());
     }
 
+    /**
+     * @param labelIds
+     * @return Entity.
+     */
     @Named("getLabels")
     Set<Label> getLabels(Set<Long> labelIds) {
         return labelRepository.findByIdIn(labelIds);

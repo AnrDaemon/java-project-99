@@ -10,6 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@SuppressWarnings(value = "checkstyle:MagicNumber")
 public class UserCreateDTO {
     @Email
     @NotNull

@@ -82,6 +82,9 @@ public class TaskControllerTest {
     private User testUser;
     private Label testLabel;
 
+    /**
+     * Set up the test environment.
+     */
     @BeforeEach
     public void setUp() {
         taskRepository.deleteAll();
@@ -114,6 +117,9 @@ public class TaskControllerTest {
         token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
     }
 
+    /**
+     * Collect garbage after a test run.
+     */
     @AfterEach
     public void garbageDbDelete() {
         taskRepository.deleteAll();
@@ -255,6 +261,7 @@ public class TaskControllerTest {
     }
 
     @Test
+    @SuppressWarnings(value = "checkstyle:MagicNumber")
     public void testIndexTaskTitleCont() throws Exception {
         String findString = "first_string";
         String otherString = "second_string";

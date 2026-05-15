@@ -29,6 +29,9 @@ public class UsersController {
 
     private UserService userService;
 
+    /**
+     * @return Users list
+     */
     @GetMapping(path = "")
     public ResponseEntity<List<UserDTO>> index() {
         var result = userService.index();
@@ -39,7 +42,10 @@ public class UsersController {
     }
 
     /**
-     * GET /api/users/{id}
+     * GET /api/users/{id}.
+     *
+     * @param id
+     * @return User
      */
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -48,7 +54,10 @@ public class UsersController {
     }
 
     /**
-     * POST /api/users
+     * POST /api/users.
+     *
+     * @param dto
+     * @return User.
      */
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,7 +66,11 @@ public class UsersController {
     }
 
     /**
-     * PUT /api/users/{id}
+     * PUT /api/users/{id}.
+     *
+     * @param id
+     * @param dto
+     * @return User.
      */
     @RequestMapping(path = "/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
     @PreAuthorize("@userUtils.isAuthor(#id)")
@@ -67,7 +80,9 @@ public class UsersController {
     }
 
     /**
-     * DELETE /api/users/{id}
+     * DELETE /api/users/{id}.
+     *
+     * @param id
      */
     @DeleteMapping(path = "/{id}")
     @PreAuthorize("@userUtils.isAuthor(#id)")

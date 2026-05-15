@@ -23,7 +23,10 @@ public class TaskService {
     private TaskSpecification specBuilder;
 
     /**
-     * GET /api/tasks/{id}
+     * GET /api/tasks/{id}.
+     *
+     * @param id
+     * @return Task
      */
     public TaskDTO show(Long id) {
         return taskMapper.map(taskRepository
@@ -32,7 +35,10 @@ public class TaskService {
     }
 
     /**
-     * GET /api/tasks
+     * GET /api/tasks.
+     *
+     * @param params
+     * @return List Task
      */
     public List<TaskDTO> index(TaskParamsDTO params) {
         var spec = specBuilder.build(params);
@@ -43,7 +49,10 @@ public class TaskService {
     }
 
     /**
-     * POST /api/tasks
+     * POST /api/tasks.
+     *
+     * @param taskCreateDTO
+     * @return Tasks
      */
     public TaskDTO create(TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
@@ -52,7 +61,11 @@ public class TaskService {
     }
 
     /**
-     * PUT /api/tasks/{id}
+     * PUT /api/tasks/{id}.
+     *
+     * @param id
+     * @param taskUpdateDTO
+     * @return Task
      */
     public TaskDTO update(long id, TaskUpdateDTO taskUpdateDTO) {
         var task = taskRepository
@@ -64,7 +77,9 @@ public class TaskService {
     }
 
     /**
-     * DELETE /api/tasks/{id}
+     * DELETE /api/tasks/{id}.
+     *
+     * @param id
      */
     public void delete(Long id) {
         taskRepository.deleteById(id);

@@ -36,18 +36,28 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     /**
+     * List the users.
+     *
      * GET /api/users
+     *
+     * @return List of users.
      */
     public List<UserDTO> index() {
         var users = userRepository.findAll();
         var ret = users.stream()
                 .map((user) -> userMapper.map(user))
                 .toList();
+
         return ret;
     }
 
     /**
+     * Show a single user.
+     *
      * GET /api/users/{id}
+     *
+     * @param id
+     * @return User.
      */
     public UserDTO show(long id) {
         var user = userRepository.findById(id)
@@ -56,7 +66,12 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Create a new user.
+     *
      * POST /api/users
+     *
+     * @param dto
+     * @return User.
      */
     public UserDTO create(UserCreateDTO dto) {
         var newUser = userMapper.map(dto);
@@ -67,7 +82,13 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Update user by ID.
+     *
      * PUT /api/users/{id}
+     *
+     * @param id
+     * @param dto
+     * @return UserDTO
      */
     public UserDTO update(long id, UserUpdateDTO dto) {
         var user = userRepository.findById(id)
@@ -81,7 +102,11 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Removing user by ID.
+     *
      * DELETE /api/users/{id}
+     *
+     * @param id
      */
     public void delete(long id) {
         if (taskRepository.existsByAssigneeId(id)) {
@@ -90,6 +115,12 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+    /**
+     * Returns user by email.
+     *
+     * @param email
+     * @return User.
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = userRepository.findByEmail(email)

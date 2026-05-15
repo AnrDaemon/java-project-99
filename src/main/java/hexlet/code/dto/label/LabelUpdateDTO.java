@@ -9,6 +9,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 
 @Getter
 @Setter
+@SuppressWarnings(value = "checkstyle:MagicNumber")
 public class LabelUpdateDTO {
 
     @NotNull

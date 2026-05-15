@@ -8,6 +8,11 @@ import net.datafaker.Faker;
 @TestConfiguration
 public class TestDataConfig {
 
+    /**
+     * DataFaker wrapper for SpringBoot.
+     *
+     * @return The DataFaker instance.
+     */
     @Bean
     public Faker faker() {
         return new Faker();
