@@ -7,12 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,32 +38,39 @@ public class UsersController {
                 .body(result);
     }
 
-    // --------------------------------------------------------------------------------------------------
+    /**
+     * GET /api/users/{id}
+     */
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO show(@PathVariable Long id) {
         return userService.show(id);
     }
 
-    // --------------------------------------------------------------------------------------------------
+    /**
+     * POST /api/users
+     */
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@RequestBody @Valid UserCreateDTO dto) {
         return userService.create(dto);
     }
 
-    // --------------------------------------------------------------------------------------------------
-    @PatchMapping(path = "/{id}")
-    @PutMapping(path = "/{id}")
-    @PreAuthorize("@userUtils.isAuthor(#id)") // может изменить только тот кто вошел
+    /**
+     * PUT /api/users/{id}
+     */
+    @RequestMapping(path = "/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
+    @PreAuthorize("@userUtils.isAuthor(#id)")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
         return userService.update(id, dto);
     }
 
-    // --------------------------------------------------------------------------------------------------
+    /**
+     * DELETE /api/users/{id}
+     */
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("@userUtils.isAuthor(#id)") // может удалить только тот кто вошел
+    @PreAuthorize("@userUtils.isAuthor(#id)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         userService.delete(id);
