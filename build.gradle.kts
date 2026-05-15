@@ -33,9 +33,6 @@ dependencies {
 
     // Source: https://mvnrepository.com/artifact/io.sentry/sentry
     implementation("io.sentry:sentry:8.38.0")
-    // implementation("net.datafaker:datafaker:2.4.3")
-    // implementation("net.javacrumbs.json-unit:json-unit-assertj:4.0.0")
-    // implementation("org.instancio:instancio-junit:5.0.2")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
     implementation("org.openapitools:jackson-databind-nullable:0.2.10")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
@@ -53,6 +50,9 @@ dependencies {
     // для отладки
     implementation("org.springframework.boot:spring-boot-devtools")
 
+    testImplementation("net.datafaker:datafaker:2.4.3")
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:4.0.0")
+    testImplementation("org.instancio:instancio-junit:5.0.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
