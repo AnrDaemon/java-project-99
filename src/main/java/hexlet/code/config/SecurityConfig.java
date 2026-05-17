@@ -7,7 +7,6 @@ import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,10 +23,10 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -78,15 +77,12 @@ public class SecurityConfig {
     /**
      *
      * @param http
-     * @param introspector
      * @param jwtDecoder
      * @return SecurityFilterChain
      * @throws Exception
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector,
-            JwtDecoder jwtDecoder)
-            throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -127,19 +123,16 @@ public class SecurityConfig {
      */
     @Bean
     public AuthenticationProvider daoAuthProvider(PasswordEncoder passwordEncoder, UserService userService) {
-        var provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
+        var provider = new DaoAuthenticationProvider(userService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 
     /**
-     * @return Jackson2ObjectMapperBuilder
+     * @return JsonMapper
      */
     @Bean
-    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
-        var builder = new Jackson2ObjectMapperBuilder();
-
+    public JsonMapper objectMapperBuilder() {
         var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         var javaTimeModule = new JavaTimeModule();
 
@@ -147,9 +140,11 @@ public class SecurityConfig {
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(dateFormatter));
         javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(dateFormatter));
 
-        return builder
+        return JsonMapper.builder()
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
-                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .modules(javaTimeModule, new JsonNullableModule());
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .addModule(javaTimeModule)
+                .addModule(new JsonNullableModule())
+                .build();
     }
 }

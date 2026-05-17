@@ -1,5 +1,6 @@
 package hexlet.code.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,8 @@ public class UserService implements UserDetailsService {
     public UserDTO create(UserCreateDTO dto) {
         var newUser = userMapper.map(dto);
         newUser.setPasswordDigest(passwordEncoder.encode(dto.getPassword()));
+        newUser.setCreatedAt(LocalDate.now());
+        newUser.setUpdatedAt(LocalDate.now());
         userRepository.save(newUser);
 
         return userMapper.map(newUser);
@@ -97,6 +100,7 @@ public class UserService implements UserDetailsService {
         if (dto.getPassword() != null && dto.getPassword().isPresent()) {
             user.setPasswordDigest(passwordEncoder.encode(dto.getPassword().get()));
         }
+        user.setUpdatedAt(LocalDate.now());
         userRepository.save(user);
         return userMapper.map(user);
     }

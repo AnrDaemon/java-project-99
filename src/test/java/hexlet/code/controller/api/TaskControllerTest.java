@@ -21,8 +21,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -155,13 +155,14 @@ public class TaskControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var taskStatus = taskRepository.findByName(data.getTitle()).orElse(null);
-        assertNotNull(taskStatus);
-        assertThat(taskStatus.getIndex()).isEqualTo(data.getIndex());
-        assertThat(taskStatus.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
-        // assertThat(taskStatus.getName()).isEqualTo(data.getTitle());
-        assertThat(taskStatus.getDescription()).isEqualTo(data.getContent());
-        assertThat(taskStatus.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
+        var task = taskRepository.findByName(data.getTitle()).orElse(null);
+        assertNotNull(task);
+        assertThat(task.getIndex()).isEqualTo(data.getIndex());
+        assertThat(task.getName()).isEqualTo(data.getTitle());
+        assertThat(task.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
+        assertThat(task.getDescription()).isEqualTo(data.getContent());
+        assertThat(task.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
+        assertThat(task.getCreatedAt()).isNotNull();
     }
 
     @Test
@@ -195,13 +196,13 @@ public class TaskControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        var taskStatus = taskRepository.findById(data.getId()).orElse(null);
-        assertNotNull(taskStatus);
-        assertThat(taskStatus.getIndex()).isEqualTo(data.getIndex());
-        assertThat(taskStatus.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
-        assertThat(taskStatus.getName()).isEqualTo(data.getTitle());
-        assertThat(taskStatus.getDescription()).isEqualTo(data.getContent());
-        assertThat(taskStatus.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
+        var task = taskRepository.findById(data.getId()).orElse(null);
+        assertNotNull(task);
+        assertThat(task.getIndex()).isEqualTo(data.getIndex());
+        assertThat(task.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
+        assertThat(task.getName()).isEqualTo(data.getTitle());
+        assertThat(task.getDescription()).isEqualTo(data.getContent());
+        assertThat(task.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
     }
 
     @Test

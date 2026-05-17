@@ -1,5 +1,6 @@
 package hexlet.code.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -56,6 +57,7 @@ public class TaskService {
      */
     public TaskDTO create(TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
+        task.setCreatedAt(LocalDate.now());
         taskRepository.save(task);
         return taskMapper.map(task);
     }
