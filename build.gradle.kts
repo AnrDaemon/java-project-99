@@ -3,7 +3,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -15,16 +15,16 @@ repositories {
 plugins {
     id("application")
     id("checkstyle")
-    id("se.patrikerdes.use-latest-versions") version "0.2.18"
-    id("com.github.ben-manes.versions") version "0.49.0"
-    id("com.gradleup.shadow") version "8.3.10"
-    id("io.freefair.lombok") version "8.10"
-    id("org.sonarqube") version "4.0.0.2929"
+    id("se.patrikerdes.use-latest-versions") version "0.2.19"
+    id("se.ascp.gradle.gradle-versions-filter") version "0.1.16"
+    id("com.github.ben-manes.versions") version "0.54.0"
+    id("com.gradleup.shadow") version "9.4.1"
+    id("io.freefair.lombok") version "9.5.0"
+    id("org.sonarqube") version "7.3.0.8198"
     id("jacoco")
-    id("org.springframework.boot") version "3.5.14"
+    id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
-    id("gg.jte.gradle") version "3.2.1"
-    id("io.sentry.jvm.gradle") version "5.6.0"
+    id("io.sentry.jvm.gradle") version "6.7.0"
 }
 
 dependencies {
@@ -32,9 +32,9 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.6.3")
 
     // Source: https://mvnrepository.com/artifact/io.sentry/sentry
-    implementation("io.sentry:sentry:8.38.0")
+    implementation("io.sentry:sentry:8.41.0")
     implementation("org.openapitools:jackson-databind-nullable:0.2.10")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -50,27 +50,19 @@ dependencies {
     // для отладки
     implementation("org.springframework.boot:spring-boot-devtools")
 
-    testImplementation("net.datafaker:datafaker:2.4.3")
-    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:4.0.0")
-    testImplementation("org.instancio:instancio-junit:5.0.2")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
+    testImplementation("net.datafaker:datafaker:2.5.4")
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:5.1.1")
+    testImplementation("org.instancio:instancio-junit:5.5.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-webmvc-test")
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation(platform("org.junit:junit-bom:5.12.0"))
+    testImplementation(platform("org.junit:junit-bom:6.0.3"))
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 application {
     mainClass.set("hexlet.code.AppApplication")
-}
-
-jte {
-    precompile()
-}
-
-configure<gg.jte.gradle.JteExtension> {
-    sourceDirectory.set(project.layout.projectDirectory.dir("src/main/resources/templates").asFile.toPath())
-    generate()
 }
 
 checkstyle {
@@ -84,7 +76,7 @@ checkstyle {
 }
 
 jacoco {
-    toolVersion = "0.8.12"
+    toolVersion = "0.8.14"
 }
 
 sonar {
@@ -124,14 +116,6 @@ tasks.jar {
     }
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    dependsOn("generateJte")
-}
-
-tasks.matching { it.name == "generateEffectiveLombokConfig" }.configureEach {
-    dependsOn("generateJte")
-}
-
 tasks.withType<JavaCompile> {
     options.compilerArgs.addAll(arrayOf(
         "-Aproject=${project.group}/${project.name}"
@@ -151,8 +135,5 @@ tasks.register("install") {
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    from("jte-classes") {
-        include("**/*.class")
-    }
     mergeServiceFiles()
 }
