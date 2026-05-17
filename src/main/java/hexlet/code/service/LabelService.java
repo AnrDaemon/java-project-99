@@ -1,5 +1,6 @@
 package hexlet.code.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class LabelService {
     public LabelDTO create(LabelCreateDTO labelDTO) {
         return labelMapper.map(
                 labelRepository.save(
-                        labelMapper.map(labelDTO)));
+                        labelMapper.map(labelDTO).setCreatedAt(LocalDate.now())));
     }
 
     /**

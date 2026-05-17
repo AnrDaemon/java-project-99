@@ -150,6 +150,8 @@ public class UsersControllerTest {
         assertNotNull(user);
         assertThat(user.getFirstName()).isEqualTo(data.getFirstName().get());
         assertThat(user.getLastName()).isEqualTo(data.getLastName().get());
+        assertThat(user.getCreatedAt()).isNotNull();
+        assertThat(user.getUpdatedAt()).isNotNull();
     }
 
     @Test
@@ -184,6 +186,7 @@ public class UsersControllerTest {
 
     @Test
     public void testUpdateUser() throws Exception {
+        var oldUser = userRepository.findById(testUser.getId()).orElse(null);
         var data = new HashMap<>();
         data.put("firstName", faker.name().firstName());
         data.put("lastName", faker.name().lastName());
@@ -203,6 +206,7 @@ public class UsersControllerTest {
         assertThat(user.getFirstName()).isEqualTo(data.get("firstName"));
         assertThat(user.getLastName()).isEqualTo(data.get("lastName"));
         assertThat(user.getEmail()).isEqualTo(data.get("email"));
+        assertThat(user.getUpdatedAt()).isNotEqualTo(oldUser.getUpdatedAt());
     }
 
     @Test

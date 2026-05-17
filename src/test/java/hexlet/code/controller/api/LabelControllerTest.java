@@ -130,6 +130,7 @@ public class LabelControllerTest {
         var label = labelRepository.findByName(data.getName()).orElse(null);
         assertNotNull(label);
         assertThat(label.getName()).isEqualTo(data.getName());
+        assertThat(label.getCreatedAt()).isNotNull();
     }
 
     @Test
