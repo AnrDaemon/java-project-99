@@ -77,7 +77,6 @@ public class SecurityConfig {
     /**
      *
      * @param http
-     * @param introspector
      * @param jwtDecoder
      * @return SecurityFilterChain
      * @throws Exception

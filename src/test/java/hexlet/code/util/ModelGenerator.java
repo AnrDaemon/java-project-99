@@ -42,7 +42,7 @@ public class ModelGenerator {
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .supply(Select.field(User::getLastName), () -> faker.name().lastName())
-                .supply(Select.field(User.class, "passwordDigest"), () -> faker.internet().password(3, 10))
+                .supply(Select.field(User.class, "passwordDigest"), () -> faker.credentials().password(3, 10))
                 .toModel();
 
         taskStatusModel = Instancio.of(TaskStatus.class)
@@ -58,14 +58,8 @@ public class ModelGenerator {
         taskModel = Instancio.of(Task.class)
                 .ignore(Select.field(Task::getId))
                 .supply(Select.field(Task::getIndex), () -> Long.valueOf(faker.number().numberBetween(1, 100)))
-                // .supply(Select.field(Task::getAssignee), () ->
-                // faker.number().numberBetween(1, 100))
                 .supply(Select.field(Task::getName), () -> faker.company().buzzword())
                 .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence(5))
-                // .supply(Select.field(Task::getTaskStatus), () ->
-                // faker.lorem().words(2).stream()
-                // .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
-                // .collect(Collectors.joining("_")))
                 .toModel();
         labelModel = Instancio.of(Label.class)
                 .ignore(Select.field(Label::getId))
