@@ -2,9 +2,10 @@
 
 FROM eclipse-temurin:25-jdk AS builder
 
-# WORKDIR /
+RUN install -d /app
+WORKDIR /app
 
-RUN --mount=type=bind,source=app,target=.,rw \
+RUN --mount=type=bind,source=.,target=/app,rw \
     --mount=type=cache,target=/root/.gradle <<BUILD
     set -e
     mkdir -p /build
@@ -14,8 +15,9 @@ BUILD
 
 FROM eclipse-temurin:25-jre AS runtime
 
-WORKDIR /
-COPY --from=builder /build/app-0.0.1-SNAPSHOT-all.jar app.jar
+RUN install -d /app
+WORKDIR /app
+COPY --from=builder /build/app-0.0.1-SNAPSHOT-all.jar /app/app.jar
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
