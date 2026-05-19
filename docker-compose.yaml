@@ -1,0 +1,32 @@
+services:
+
+  app:
+    image: hexlet-5k:latest
+    build:
+      context: .
+      dockerfile: .docker/app/Dockerfile
+      target: runtime
+    environment:
+      ENV: prod
+      JDBC_DATABASE_URL: "jdbc:postgresql://postgres/app"
+      JDBC_USERNAME: app
+      JDBC_PASSWORD: app
+    depends_on:
+      - postgres
+
+  postgres:
+    build:
+      context: .
+      dockerfile: .docker/postgres/Dockerfile
+      target: runtime
+    stop_grace_period: 1m
+    volumes:
+      - bridge_dbdata:/var/lib/postgresql/data
+    environment:
+      TZ: "UTC"
+      POSTGRES_PASSWORD: ${DB_PASS:-app}
+      POSTGRES_USER: ${DB_USER:-app}
+      POSTGRES_DB: ${DB_NAME:-app}
+
+volumes:
+  bridge_dbdata:
