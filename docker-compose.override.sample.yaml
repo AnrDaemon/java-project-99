@@ -1,0 +1,10 @@
+services:
+
+  app:
+    environment:
+      ENV: dev
+    depends_on: !reset []
+
+  postgres:
+    profiles: !override
+      - manual

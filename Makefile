@@ -1,4 +1,5 @@
 ORIGIN ?= origin
+COMPOSE ?= docker compose
 
 build:
 	./gradlew build
@@ -35,3 +36,13 @@ fetch:
 sync:
 	git branch -f master github/HEAD
 	git push origin master:master
+
+.PHONY: up
+up: TARGET ?= --remove-orphans
+up:
+	$(COMPOSE) up --detach $(TARGET)
+
+.PHONY: down
+down: TARGET ?= --remove-orphans
+down:
+	$(COMPOSE) down $(TARGET)
